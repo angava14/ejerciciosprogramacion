@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <center><h1>Ejercicio 1 - Parqueaderos</h1></center>
+<div style="display:flex;flex-direction: row;">
+  
+
+   
+    <div  style="display:flex;flex-direction: column;margin-right:5%;">
+        <h1>Input</h1>
+        <textarea name="textarea"  id="input1" rows="10" cols="50"></textarea>
+        <button  style="width: fit-content;margin:2% 0%" type="button" id="button1" >Calcular</button>
+    </div>
+    <div  >
+        <h1>Output</h1>
+        <textarea name="textarea" id="output1" rows="10" cols="50"></textarea>
+       
+    </div>
+
+</div>
+
+<center><h1>Ejercicio 3 - Materia Oscura</h1></center>
+<div style="display:flex;flex-direction: row;">
+   
+    <div style="display:flex;flex-direction: column; margin-right:5%;">
+        <h1>Input</h1>
+        <textarea name="textarea"  id="input3" rows="10" cols="50"></textarea>
+        <button style= "width: fit-content;margin:2% 0%" type="button" id="button3">Calcular</button>
+    </div>
+    <div>
+        <h1>Output</h1>
+        <textarea name="textarea" id="output3" rows="10" cols="50"></textarea>
+        
+    </div>
+
+</div>
+
+</body>
+</html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+<script >
+   
+   $(document).ready(function(e){
+
+            $('#button1').click(function (e) {
+                var text = document.getElementById('input1');
+                var text = text.value.split('\n');
+                var array = Array();
+
+                for(var i = 0 ; i< text.length;i++){
+                    array.push(text[i]);
+                }
+              
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:3000/1',
+                    contentType: "application/json; charset=UTF-8",
+                    dataType: 'json',
+                    data: JSON.stringify({arr:text}),
+                    success: function(data) {
+                        
+                        $("textarea#output1").val(data.responseText); 
+                    },
+                    error: function(data) {
+                        $("textarea#output1").val(data.responseText); 
+                    }
+                });
+    
+           });
+
+           $('#button3').click(function (e) {
+                var text = document.getElementById('input3').value.split('\n');
+               
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:3000/3',
+                    contentType: "application/json; charset=UTF-8",
+                    dataType: 'json',
+                    data: JSON.stringify({arr:text}),
+                    success: function(data) {
+                        
+                        $("textarea#output3").val(data.responseText); 
+                    },
+                    error: function(data) {
+                        $("textarea#output3").val(data.responseText); 
+                    }
+                });
+                
+           });
+
+    });
+</script>
